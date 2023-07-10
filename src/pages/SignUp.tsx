@@ -6,8 +6,10 @@ import SignUpImg from '../constants/img/SignUpImg.svg';
 import BackArrow from '../components/ui/BackArrow';
 import PrimaryInput from '../components/ui/PrimaryInput';
 import Chips from '../components/Chips';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
   const PageMove = () => {
@@ -22,6 +24,8 @@ function SignUp() {
     //뒤로가기 버튼
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    } else if (currentPage === 1) {
+      navigate('/');
     }
   };
 
@@ -78,8 +82,16 @@ function SignUp() {
           </S.SmallPhrase>
         </>
       )}
-      {currentPage === 2 && <PrimaryInput placeholder='' />}
-      {currentPage === 3 && <PrimaryInput placeholder='' />}
+      {currentPage === 2 && (
+        <S.InputWrapper>
+          <PrimaryInput placeholder='' />
+        </S.InputWrapper>
+      )}
+      {currentPage === 3 && (
+        <S.InputWrapper>
+          <PrimaryInput placeholder='' />
+        </S.InputWrapper>
+      )}
       {currentPage === 4 && (
         <S.SignUpChips>
           <div style={{ marginRight: '6px' }}>
@@ -88,14 +100,22 @@ function SignUp() {
             </Chips>
           </div>
           <div>
-            <Chips width='50px' selected=''>
+            <Chips width='50px' selected='false'>
               여성
             </Chips>
           </div>
         </S.SignUpChips>
       )}
-      {currentPage === 5 && <PrimaryInput placeholder='' />}
-      {currentPage === 6 && <PrimaryInput placeholder='' />}
+      {currentPage === 5 && (
+        <S.InputWrapper>
+          <PrimaryInput placeholder='' />
+        </S.InputWrapper>
+      )}
+      {currentPage === 6 && (
+        <S.InputWrapper>
+          <PrimaryInput placeholder='' />
+        </S.InputWrapper>
+      )}
       <S.SignUpButton onClick={PageMove}>
         <PrimaryButton color='white' background={PRIMARY}>
           {currentPhrase.btn}
@@ -111,25 +131,24 @@ const S = {
     position: relative;
     flex-direction: column;
     width: 100%;
-    height: 95vh;
+    height: 100vh;
   `,
   SignUpButton: styled.div`
     position: absolute;
-    bottom: 0px;
-    width: 100%;
+    bottom: 40px;
+    width: 95%;
     height: 40px;
-    margin: 0px 12px 20px 0px;
+    margin-left: 10px;
   `,
   SignUpImg: styled.img`
     width: 100%;
     height: 350px;
-    margin-bottom: 15px;
+    margin-top: 20px;
   `,
-  MainPhrase: styled.p`
-    width: 100%;
+  MainPhrase: styled.span`
     font-size: 20px;
     font-weight: bold;
-    margin: 24px 0px 5px 16px;
+    margin: 30px 0px 0px 15px;
   `,
   SubPhrase: styled.span`
     font-size: 12px;
@@ -144,8 +163,12 @@ const S = {
   `,
   SignUpChips: styled.div`
     display: flex;
-    width: 100%;
+    width: 90%;
     margin-left: 20px;
+  `,
+  InputWrapper: styled.div`
+    width: 90%;
+    margin-left: 15px;
   `,
 };
 
