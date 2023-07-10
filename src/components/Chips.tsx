@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PRIMARY } from '../constants/color';
+import { LIGHT_GRAY, PRIMARY } from '../constants/color';
 interface Props {
   selected: string;
   children: string;
@@ -25,7 +25,7 @@ const S = {
     font-weight: bold;
     border-radius: 35%;
     text-align: center;
-    background-color: ${(props) => (props.selected ? PRIMARY : '#F7F8FA')};
+    background-color: ${(props) => (props.selected ? PRIMARY : LIGHT_GRAY)};
     color: ${(props) => (props.selected ? 'white' : '')};
   `,
 };
