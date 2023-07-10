@@ -2,11 +2,7 @@ import React from 'react';
 import AppInner from './AppInner';
 
 function App() {
-  return (
-    <div>
-      <AppInner />
-    </div>
-  );
+  return <AppInner />;
 }
 
 export default App;
