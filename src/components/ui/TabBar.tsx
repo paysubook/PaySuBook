@@ -3,13 +3,23 @@ import styled from 'styled-components';
 import { PRIMARY } from '../../constants/color';
 
 interface Props {
-  children: any;
   selected: boolean;
+  onClick?: () => void;
+  icon: React.ReactNode;
+  label: string;
 }
 
-function TabBar({ children, selected }: Props) {
-  return <S.TabBarLayOut selected={selected}>{children}</S.TabBarLayOut>;
+function TabBar({ selected, onClick, icon, label }: Props) {
+  return (
+    <S.TabBarLayOut selected={selected} onClick={onClick}>
+      <S.TabItem>
+        {icon}
+        <S.ItemName>{label}</S.ItemName>
+      </S.TabItem>
+    </S.TabBarLayOut>
+  );
 }
+
 const S = {
   TabBarLayOut: styled.div<{ selected: boolean }>`
     width: 100%;
@@ -21,6 +31,18 @@ const S = {
     border-top: ${(props) =>
       props.selected ? `1px solid ${PRIMARY}` : 'none'};
     color: ${(props) => (props.selected ? PRIMARY : 'black')};
+  `,
+  TabItem: styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    font-size: 22px;
+  `,
+  ItemName: styled.span`
+    margin-top: 5px;
+    font-size: 14px;
   `,
 };
 export default TabBar;
