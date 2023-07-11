@@ -5,16 +5,17 @@ import PrimaryButton from '../components/ui/PrimaryButton';
 import SignUpImg from '../constants/img/SignUpImg.svg';
 import BackArrow from '../components/ui/BackArrow';
 import PrimaryInput from '../components/ui/PrimaryInput';
-import Chips from '../components/Chips';
+import Chips from '../components/ui/Chips';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [genderChip, setGenderChip] = useState(1);
 
   const PageMove = () => {
     // 페이지 이동
-    if (currentPage < 6) {
+    if (currentPage <= 5) {
       setCurrentPage(currentPage + 1);
     }
     return;
@@ -26,6 +27,12 @@ function SignUp() {
       setCurrentPage(currentPage - 1);
     } else if (currentPage === 1) {
       navigate('/');
+    }
+  };
+
+  const handleChipPress = (chipId) => {
+    if (genderChip !== chipId) {
+      setGenderChip(chipId);
     }
   };
 
@@ -95,12 +102,20 @@ function SignUp() {
       {currentPage === 4 && (
         <S.SignUpChips>
           <div style={{ marginRight: '6px' }}>
-            <Chips width='50px' selected='true'>
+            <Chips
+              width='50px'
+              selected={genderChip === 1}
+              onClick={() => handleChipPress(1)}
+            >
               남성
             </Chips>
           </div>
           <div>
-            <Chips width='50px' selected='false'>
+            <Chips
+              width='50px'
+              selected={genderChip === 2}
+              onClick={() => handleChipPress(2)}
+            >
               여성
             </Chips>
           </div>
