@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { LIGHT_GRAY, PRIMARY } from '../../constants/color';
 interface Props {
   selected: boolean;
-  children: string;
   width: string;
+  label: string;
   onClick?: () => void;
 }
-function Chip({ selected, children, width, onClick }: Props) {
+function Chip({ selected, width, onClick, label }: Props) {
   return (
     <S.BasicChip onClick={onClick} width={width} selected={selected}>
-      {children}
+      {label}
     </S.BasicChip>
   );
 }
