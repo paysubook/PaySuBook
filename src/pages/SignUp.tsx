@@ -31,6 +31,7 @@ function SignUp() {
   };
 
   const handleChipPress = (chipId) => {
+    //성별 선택 칩
     if (genderChip !== chipId) {
       setGenderChip(chipId);
     }
@@ -106,18 +107,16 @@ function SignUp() {
               width='50px'
               selected={genderChip === 1}
               onClick={() => handleChipPress(1)}
-            >
-              남성
-            </Chips>
+              label='남성'
+            />
           </div>
           <div>
             <Chips
               width='50px'
               selected={genderChip === 2}
               onClick={() => handleChipPress(2)}
-            >
-              여성
-            </Chips>
+              label='여성'
+            />
           </div>
         </S.SignUpChips>
       )}
