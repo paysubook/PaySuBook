@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { GRAY, LIGHT_GRAY, PRIMARY } from '../constants/color';
 import TabBar from '../components/ui/TabBar';
 import CompareOutlay from '../components/home/CompareOutlay';
@@ -15,24 +16,30 @@ import CostSummary from '../components/home/CostSummary';
 import AssetStatus from '../components/home/AssetStatus';
 import FinanceSummary from '../components/home/FinanceSummary';
 import Chips from '../components/ui/Chips';
+import CategoryIcon from '../components/ui/CategoryIcon';
+import { profitCategoryIcons } from '../components/category/profitCategoryItem';
+import { expenditureCategoryIcons } from '../components/category/expenditureCategoryItem';
 
 function Home() {
   const [selectedTabId, setSelectedTabId] = useState(1);
   const [seletedChip, setSelectedChip] = useState(1);
 
   const handleTabPress = (tabId) => {
+    // 하단 탭바 선택 시
     if (selectedTabId !== tabId) {
       setSelectedTabId(tabId);
     }
   };
 
   const handleChipPress = (chipId) => {
+    // 수입과 지출에 따른 필터 값
     if (seletedChip !== chipId) {
       setSelectedChip(chipId);
     }
   };
 
   const getNowMonth = () => {
+    // 현재 월 가져오기
     return new Date().getMonth() + 1;
   };
 
@@ -77,30 +84,40 @@ function Home() {
                 width='50px'
                 selected={seletedChip === 1}
                 onClick={() => handleChipPress(1)}
-              >
-                전체
-              </Chips>
+                label='전체'
+              />
               <Chips
                 width='50px'
                 selected={seletedChip === 2}
                 onClick={() => handleChipPress(2)}
-              >
-                수입
-              </Chips>
+                label='수입'
+              />
               <Chips
                 width='50px'
                 selected={seletedChip === 3}
                 onClick={() => handleChipPress(3)}
-              >
-                지출
-              </Chips>
+                label='지출'
+              />
             </S.HistoryChips>
+            {seletedChip === 2 && (
+              <S.CategoryIcon>
+                <CategoryIcon icons={profitCategoryIcons} />
+              </S.CategoryIcon>
+            )}
+            {seletedChip === 3 && (
+              <S.CategoryIcon>
+                <CategoryIcon icons={expenditureCategoryIcons} />
+              </S.CategoryIcon>
+            )}
           </S.HomeHistory>
-          <S.AddHistoryBtn>
-            <MdAdd />
-          </S.AddHistoryBtn>
+          <Link to='/history/add'>
+            <S.AddHistoryBtn>
+              <MdAdd />
+            </S.AddHistoryBtn>
+          </Link>
         </S.HomeHistoryLayout>
       )}
+
       <S.HomeTapBar>
         <TabBar
           selected={selectedTabId === 1}
@@ -215,6 +232,10 @@ const S = {
     display: flex;
     width: 90%;
     margin-top: 15px;
+  `,
+  CategoryIcon: styled.div`
+    width: 90%;
+    display: flex;
   `,
 };
 
