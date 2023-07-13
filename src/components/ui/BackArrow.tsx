@@ -1,9 +1,14 @@
 import React from 'react';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import styled from 'styled-components';
-function BackArrow() {
+
+interface Props {
+  onClick?: () => void;
+}
+
+function BackArrow({ onClick }: Props) {
   return (
-    <Layout>
+    <Layout onClick={onClick}>
       <MdArrowBackIosNew />
     </Layout>
   );
