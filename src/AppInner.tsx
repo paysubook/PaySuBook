@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 const Main = React.lazy(() => import('./pages/Main'));
 const SignUp = React.lazy(() => import('./pages/SignUp'));
 const Home = React.lazy(() => import('./pages/Home'));
+const AddHistory = React.lazy(() => import('./pages/AddHistory'));
 
 function AppInner() {
   return (
@@ -14,6 +15,7 @@ function AppInner() {
           <Route path='/' element={<Main />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/home' element={<Home />} />
+          <Route path='/history/add' element={<AddHistory />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
