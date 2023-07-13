@@ -19,7 +19,7 @@ const Input = styled.input`
   &::placeholder {
     color: ${GRAY};
     font-size: 14px;
-    padding: 12px 16px;
+    padding: 12px 5px;
   }
 `;
 export default PrimaryInput;
