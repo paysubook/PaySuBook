@@ -104,16 +104,14 @@ function SignUp() {
         <S.SignUpChips>
           <div style={{ marginRight: '6px' }}>
             <Chips
-              width='50px'
-              selected={genderChip === 1}
+              isActive={genderChip === 1}
               onClick={() => handleChipPress(1)}
               label='남성'
             />
           </div>
           <div>
             <Chips
-              width='50px'
-              selected={genderChip === 2}
+              isActive={genderChip === 2}
               onClick={() => handleChipPress(2)}
               label='여성'
             />

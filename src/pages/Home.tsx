@@ -81,20 +81,17 @@ function Home() {
             </S.FinanceSummary>
             <S.HistoryChips>
               <Chips
-                width='50px'
-                selected={seletedChip === 1}
+                isActive={seletedChip === 1}
                 onClick={() => handleChipPress(1)}
                 label='전체'
               />
               <Chips
-                width='50px'
-                selected={seletedChip === 2}
+                isActive={seletedChip === 2}
                 onClick={() => handleChipPress(2)}
                 label='수입'
               />
               <Chips
-                width='50px'
-                selected={seletedChip === 3}
+                isActive={seletedChip === 3}
                 onClick={() => handleChipPress(3)}
                 label='지출'
               />
