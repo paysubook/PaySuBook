@@ -5,8 +5,18 @@ import { Link } from 'react-router-dom';
 import MainLogo from '../components/MainLogo';
 import PrimaryInput from '../components/ui/PrimaryInput';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import axios from 'axios';
 
 function Main() {
+  const submit = async () => {
+    const response = await axios.post('/api/auth/login', {
+      id: 'test123',
+      password: 'test1234',
+    });
+    console.log(1);
+    console.log(response);
+  };
+
   return (
     <S.MainLayOut>
       <div style={{ margin: '100px 120px 50px 120px' }}>
@@ -19,7 +29,7 @@ function Main() {
         <PrimaryInput placeholder={'비밀번호'} />
       </S.ComponentWrapper>
       <S.ComponentWrapper marginBottom='16px'>
-        <PrimaryButton color='white' background={PRIMARY}>
+        <PrimaryButton color='white' background={PRIMARY} onClick={submit}>
           로그인
         </PrimaryButton>
       </S.ComponentWrapper>
