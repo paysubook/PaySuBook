@@ -6,10 +6,11 @@ interface Props {
   children: string;
   color: string;
   background: string;
+  onClick?: () => void;
 }
-function PrimaryButton({ children, color, background }: Props) {
+function PrimaryButton({ children, color, background, onClick }: Props) {
   return (
-    <S.Button color={color} background={background}>
+    <S.Button color={color} background={background} onClick={onClick}>
       {children}
     </S.Button>
   );
