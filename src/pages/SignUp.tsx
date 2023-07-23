@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PRIMARY } from '../constants/color';
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -7,16 +7,51 @@ import BackArrow from '../components/ui/BackArrow';
 import PrimaryInput from '../components/ui/PrimaryInput';
 import Chips from '../components/ui/Chips';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function SignUp() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [genderChip, setGenderChip] = useState(1);
+  const [name, setName] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [gender, setGender] = useState('');
+  const [userId, setUserId] = useState('');
+  const [pwd, setPwd] = useState('');
 
-  const PageMove = () => {
-    // 페이지 이동
+  useEffect(() => {
+    if (genderChip === 1) {
+      setGender('M');
+    } else {
+      setGender('F');
+    }
+  }, [genderChip]);
+
+  const SignUpSubmit = async () => {
     if (currentPage <= 5) {
       setCurrentPage(currentPage + 1);
+    }
+
+    if (currentPhrase.btn === '완료') {
+      if (!userId || !pwd || !name || !birthday) {
+        alert('모든 필수 정보를 입력해주세요.');
+        return;
+      }
+
+      try {
+        await axios.post('/api/auth/signup', {
+          id: userId,
+          password: pwd,
+          name: name,
+          birthday: birthday,
+          genderCode: gender,
+        });
+        alert('가입이 완료되었습니다.'); // toast message로 변경 예정
+      } catch (err) {
+        if (err.message === 'Request failed with status code 409') {
+          alert('이미 가입되어 있는 계정입니다.');
+        }
+      }
     }
     return;
   };
@@ -92,12 +127,22 @@ function SignUp() {
       )}
       {currentPage === 2 && (
         <S.InputWrapper>
-          <PrimaryInput placeholder='' />
+          <PrimaryInput
+            placeholder=''
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+          />
         </S.InputWrapper>
       )}
       {currentPage === 3 && (
         <S.InputWrapper>
-          <PrimaryInput placeholder='' />
+          <PrimaryInput
+            placeholder='생년월일을 입력해주세요.'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setBirthday(e.target.value)
+            }
+          />
         </S.InputWrapper>
       )}
       {currentPage === 4 && (
@@ -120,16 +165,31 @@ function SignUp() {
       )}
       {currentPage === 5 && (
         <S.InputWrapper>
-          <PrimaryInput placeholder='' />
+          <PrimaryInput
+            placeholder=''
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUserId(e.target.value)
+            }
+          />
         </S.InputWrapper>
       )}
       {currentPage === 6 && (
         <S.InputWrapper>
-          <PrimaryInput placeholder='' />
+          <PrimaryInput
+            placeholder=''
+            type='password'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPwd(e.target.value)
+            }
+          />
         </S.InputWrapper>
       )}
-      <S.SignUpButton onClick={PageMove}>
-        <PrimaryButton color='white' background={PRIMARY}>
+      <S.SignUpButton>
+        <PrimaryButton
+          color='white'
+          background={PRIMARY}
+          onClick={SignUpSubmit}
+        >
           {currentPhrase.btn}
         </PrimaryButton>
       </S.SignUpButton>
