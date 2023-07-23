@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PRIMARY } from '../constants/color';
 import { Link } from 'react-router-dom';
@@ -6,15 +6,24 @@ import MainLogo from '../components/MainLogo';
 import PrimaryInput from '../components/ui/PrimaryInput';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedInAtom } from '../recoil/AuthAtom';
 
 function Main() {
+  const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
+  const [typingEmail, setTypingEmail] = useState('');
+  const [typingPwd, setTypingPwd] = useState('');
+
   const submit = async () => {
-    const response = await axios.post('/api/auth/login', {
-      id: 'test123',
-      password: 'test1234',
-    });
-    console.log(1);
-    console.log(response);
+    try {
+      await axios.post('/api/auth/login', {
+        id: typingEmail,
+        password: typingPwd,
+      });
+      setIsLoggedIn(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -23,10 +32,21 @@ function Main() {
         <MainLogo />
       </div>
       <S.ComponentWrapper marginBottom='8px'>
-        <PrimaryInput placeholder={'휴대폰 번호 또는 이메일 주소'} />
+        <PrimaryInput
+          placeholder={'휴대폰 번호 또는 이메일 주소'}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTypingEmail(e.target.value)
+          }
+        />
       </S.ComponentWrapper>
       <S.ComponentWrapper marginBottom='8px'>
-        <PrimaryInput placeholder={'비밀번호'} />
+        <PrimaryInput
+          type='password'
+          placeholder={'비밀번호'}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTypingPwd(e.target.value)
+          }
+        />
       </S.ComponentWrapper>
       <S.ComponentWrapper marginBottom='16px'>
         <PrimaryButton color='white' background={PRIMARY} onClick={submit}>
