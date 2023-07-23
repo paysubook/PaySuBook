@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { GRAY } from '../../constants/color';
 
 interface Props {
+  type?: string;
   placeholder: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function PrimaryInput({ placeholder }: Props) {
-  return <Input type='text' placeholder={placeholder} />;
+function PrimaryInput({ type, placeholder, onChange }: Props) {
+  return <Input type={type} placeholder={placeholder} onChange={onChange} />;
 }
 
 const Input = styled.input`
