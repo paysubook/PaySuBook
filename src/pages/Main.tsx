@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PRIMARY } from '../constants/color';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MainLogo from '../components/MainLogo';
 import PrimaryInput from '../components/ui/PrimaryInput';
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -11,6 +11,7 @@ import { isLoggedInAtom } from '../recoil/AuthAtom';
 
 function Main() {
   const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
+  const navigate = useNavigate();
   const [typingEmail, setTypingEmail] = useState('');
   const [typingPwd, setTypingPwd] = useState('');
 
@@ -20,6 +21,7 @@ function Main() {
         id: typingEmail,
         password: typingPwd,
       });
+      navigate('/home');
       setIsLoggedIn(true);
     } catch (err) {
       console.log(err);
