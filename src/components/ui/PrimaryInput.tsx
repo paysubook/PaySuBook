@@ -6,10 +6,18 @@ interface Props {
   type?: string;
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
-function PrimaryInput({ type, placeholder, onChange }: Props) {
-  return <Input type={type} placeholder={placeholder} onChange={onChange} />;
+function PrimaryInput({ type, value, placeholder, onChange }: Props) {
+  return (
+    <Input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
 
 const Input = styled.input`
