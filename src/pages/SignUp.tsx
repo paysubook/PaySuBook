@@ -8,6 +8,8 @@ import PrimaryInput from '../components/ui/PrimaryInput';
 import Chips from '../components/ui/Chips';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import '../constants/toast/ReactToastify.css';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -34,7 +36,11 @@ function SignUp() {
 
     if (currentPhrase.btn === '완료') {
       if (!userId || !pwd || !name || !birthday) {
-        alert('모든 필수 정보를 입력해주세요.');
+        toast.error('모든 필수 정보를 입력해주세요!', {
+          position: 'top-right',
+          autoClose: 2000,
+          theme: 'colored',
+        });
         return;
       }
 
@@ -46,10 +52,18 @@ function SignUp() {
           birthday: birthday,
           genderCode: gender,
         });
-        alert('가입이 완료되었습니다.'); // toast message로 변경 예정
+        toast.success('가입이 완료되었습니다 !', {
+          position: 'top-right',
+          autoClose: 2000,
+          theme: 'colored',
+        });
       } catch (err) {
         if (err.message === 'Request failed with status code 409') {
-          alert('이미 가입되어 있는 계정입니다.');
+          toast.error('이미 가입되어있는 계정입니다.', {
+            position: 'top-right',
+            autoClose: 2000,
+            theme: 'colored',
+          });
         }
       }
     }
@@ -128,7 +142,8 @@ function SignUp() {
       {currentPage === 2 && (
         <S.InputWrapper>
           <PrimaryInput
-            placeholder=''
+            placeholder='이름을 입력해주세요.'
+            value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
@@ -139,6 +154,7 @@ function SignUp() {
         <S.InputWrapper>
           <PrimaryInput
             placeholder='생년월일을 입력해주세요.'
+            value={birthday}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setBirthday(e.target.value)
             }
@@ -166,7 +182,8 @@ function SignUp() {
       {currentPage === 5 && (
         <S.InputWrapper>
           <PrimaryInput
-            placeholder=''
+            placeholder='사용 할 아이디를 입력해주세요.'
+            value={userId}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setUserId(e.target.value)
             }
@@ -176,7 +193,8 @@ function SignUp() {
       {currentPage === 6 && (
         <S.InputWrapper>
           <PrimaryInput
-            placeholder=''
+            placeholder='사용 할 비밀번호를 입력해주세요.'
+            value={pwd}
             type='password'
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setPwd(e.target.value)
@@ -184,6 +202,7 @@ function SignUp() {
           />
         </S.InputWrapper>
       )}
+      <ToastContainer limit={1} />
       <S.SignUpButton>
         <PrimaryButton
           color='white'
