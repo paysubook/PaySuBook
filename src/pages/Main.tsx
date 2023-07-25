@@ -8,6 +8,8 @@ import PrimaryButton from '../components/ui/PrimaryButton';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInAtom } from '../recoil/AuthAtom';
+import { toast, ToastContainer } from 'react-toastify';
+import '../constants/toast/ReactToastify.css';
 
 function Main() {
   const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
@@ -21,10 +23,29 @@ function Main() {
         id: typingEmail,
         password: typingPwd,
       });
+      toast.success('로그인 되었습니다.', {
+        position: 'top-right',
+        autoClose: 2000,
+        theme: 'colored',
+      });
       navigate('/home');
       setIsLoggedIn(true);
     } catch (err) {
-      console.log(err);
+      if (!typingEmail || !typingPwd) {
+        toast.error('아이디 및 비밀번호를 입력해주세요', {
+          position: 'top-right',
+          autoClose: 2000,
+          theme: 'colored',
+        });
+      }
+      if (err.message === 'Request failed with status code 412') {
+        toast.error('아이디 또는 비밀번호가 틀립니다.', {
+          position: 'top-right',
+          autoClose: 2000,
+          theme: 'colored',
+        });
+      }
+      console.log(err.message);
     }
   };
 
@@ -33,7 +54,7 @@ function Main() {
       <div style={{ margin: '100px 120px 50px 120px' }}>
         <MainLogo />
       </div>
-      <S.ComponentWrapper marginBottom='8px'>
+      <S.ComponentWrapper marginbottom='8px'>
         <PrimaryInput
           placeholder={'휴대폰 번호 또는 이메일 주소'}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -41,7 +62,7 @@ function Main() {
           }
         />
       </S.ComponentWrapper>
-      <S.ComponentWrapper marginBottom='8px'>
+      <S.ComponentWrapper marginbottom='8px'>
         <PrimaryInput
           type='password'
           placeholder={'비밀번호'}
@@ -50,12 +71,12 @@ function Main() {
           }
         />
       </S.ComponentWrapper>
-      <S.ComponentWrapper marginBottom='16px'>
+      <S.ComponentWrapper marginbottom='16px'>
         <PrimaryButton color='white' background={PRIMARY} onClick={submit}>
           로그인
         </PrimaryButton>
       </S.ComponentWrapper>
-      <S.ComponentWrapper marginBottom='28px'>
+      <S.ComponentWrapper marginbottom='28px'>
         <S.ForgetPwdPhrase>비밀번호를 잊으셨나요?</S.ForgetPwdPhrase>
       </S.ComponentWrapper>
       <Link to='/signup' style={{ width: '100%' }}>
@@ -63,6 +84,7 @@ function Main() {
           새 계정 만들기
         </PrimaryButton>
       </Link>
+      <ToastContainer limit={1} />
     </S.MainLayOut>
   );
 }
@@ -80,9 +102,9 @@ const S = {
     font-size: 16px;
     font-weight: 700;
   `,
-  ComponentWrapper: styled.div<{ marginBottom: string }>`
+  ComponentWrapper: styled.div<{ marginbottom: string }>`
     width: 100%;
-    margin-bottom: ${(props) => props.marginBottom};
+    margin-bottom: ${(props) => props.marginbottom};
   `,
 };
 export default Main;
