@@ -1,12 +1,15 @@
 import React from 'react';
 import AppInner from './AppInner';
 import { RecoilRoot } from 'recoil';
+import { CookiesProvider } from 'react-cookie';
 
 function App() {
   return (
-    <RecoilRoot>
-      <AppInner />
-    </RecoilRoot>
+    <CookiesProvider>
+      <RecoilRoot>
+        <AppInner />
+      </RecoilRoot>
+    </CookiesProvider>
   );
 }
 
