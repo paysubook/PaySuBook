@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const Main = React.lazy(() => import('./pages/Main'));
 const SignUp = React.lazy(() => import('./pages/SignUp'));
@@ -18,6 +19,7 @@ function AppInner() {
           <Route path='/history/add' element={<AddHistory />} />
         </Routes>
       </Suspense>
+      <ToastContainer limit={1} hideProgressBar />
     </BrowserRouter>
   );
 }
