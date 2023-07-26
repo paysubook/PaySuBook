@@ -8,7 +8,7 @@ import PrimaryButton from '../components/ui/PrimaryButton';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInAtom } from '../recoil/AuthAtom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import '../constants/toast/ReactToastify.css';
 
 function Main() {
@@ -23,8 +23,8 @@ function Main() {
         id: typingEmail,
         password: typingPwd,
       });
-      toast.success('로그인 되었습니다.', {
-        position: 'top-right',
+      toast.success('로그인 성공', {
+        position: 'top-center',
         autoClose: 2000,
         theme: 'colored',
       });
@@ -84,7 +84,6 @@ function Main() {
           새 계정 만들기
         </PrimaryButton>
       </Link>
-      <ToastContainer limit={1} />
     </S.MainLayOut>
   );
 }
