@@ -8,7 +8,7 @@ import PrimaryInput from '../components/ui/PrimaryInput';
 import Chips from '../components/ui/Chips';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import '../constants/toast/ReactToastify.css';
 
 function SignUp() {
@@ -20,6 +20,7 @@ function SignUp() {
   const [gender, setGender] = useState('');
   const [userId, setUserId] = useState('');
   const [pwd, setPwd] = useState('');
+  const [isBtnDisable, setIsBtnDisable] = useState(false);
 
   useEffect(() => {
     if (genderChip === 1) {
@@ -35,6 +36,10 @@ function SignUp() {
     }
 
     if (currentPhrase.btn === '완료') {
+      setIsBtnDisable(true);
+      setTimeout(() => {
+        setIsBtnDisable(false);
+      }, 3000);
       if (!userId || !pwd || !name || !birthday) {
         toast.error('모든 필수 정보를 입력해주세요!', {
           position: 'top-right',
@@ -202,12 +207,12 @@ function SignUp() {
           />
         </S.InputWrapper>
       )}
-      <ToastContainer limit={1} />
       <S.SignUpButton>
         <PrimaryButton
           color='white'
           background={PRIMARY}
           onClick={SignUpSubmit}
+          disabled={isBtnDisable}
         >
           {currentPhrase.btn}
         </PrimaryButton>
