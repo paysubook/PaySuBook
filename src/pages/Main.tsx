@@ -16,6 +16,7 @@ function Main() {
   const navigate = useNavigate();
   const [typingEmail, setTypingEmail] = useState('');
   const [typingPwd, setTypingPwd] = useState('');
+  const [isBtnDisable, setIsBtnDisable] = useState(false);
 
   const submit = async () => {
     try {
@@ -31,6 +32,10 @@ function Main() {
       navigate('/home');
       setIsLoggedIn(true);
     } catch (err) {
+      setIsBtnDisable(true);
+      setTimeout(() => {
+        setIsBtnDisable(false);
+      }, 3000);
       if (!typingEmail || !typingPwd) {
         toast.error('아이디 및 비밀번호를 입력해주세요', {
           position: 'top-right',
@@ -72,7 +77,12 @@ function Main() {
         />
       </S.ComponentWrapper>
       <S.ComponentWrapper marginbottom='16px'>
-        <PrimaryButton color='white' background={PRIMARY} onClick={submit}>
+        <PrimaryButton
+          color='white'
+          background={PRIMARY}
+          onClick={submit}
+          disabled={isBtnDisable}
+        >
           로그인
         </PrimaryButton>
       </S.ComponentWrapper>
