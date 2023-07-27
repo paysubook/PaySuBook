@@ -64,7 +64,7 @@ function AddHistory() {
           />
         </S.ChipsWrapper>
         <S.AddHistoryPhrase>
-          {typeChips === 1 ? <>결제</> : <>입금</>} 수단
+          {typeChips === 1 ? <>결제 수단</> : <>입금 방식</>}
         </S.AddHistoryPhrase>
         <S.ChipsWrapper>
           <Chips
