@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { PRIMARY } from '../../constants/color';
 
 interface Props {
-  onClick?: () => void;
   icons: { icon: string; label: string }[];
 }
 
-function CategoryIcon({ icons, onClick }: Props) {
+function CategoryIcon({ icons }: Props) {
+  const [selectedIcon, setSelectedIcon] = useState<string>('');
+
+  const handleIconClick = (icon: string) => {
+    setSelectedIcon(icon);
+  };
+
   return (
-    <S.CategoryIcon onClick={onClick}>
+    <S.CategoryIcon>
       {icons.map((item, index) => (
-        <S.Item key={index}>
+        <S.Item
+          key={index}
+          isSelected={selectedIcon === item.icon}
+          onClick={() => handleIconClick(item.icon)}
+        >
           <S.Icon src={item.icon} alt='icon'></S.Icon>
           <S.IconLabel>{item.label}</S.IconLabel>
         </S.Item>
@@ -29,12 +39,15 @@ const S = {
     width: 30px;
     height: 30px;
   `,
-  Item: styled.div`
+  Item: styled.div<{ isSelected: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 32px;
-    padding: 20px 24px 0px 24px;
+    padding: 8px 18px;
+    margin: 5px 4px 4px 4px;
+    border: ${(props) => (props.isSelected ? `1px solid ${PRIMARY}` : 'none')};
+    border-radius: 15px;
   `,
   IconLabel: styled.div`
     font-size: 13px;
